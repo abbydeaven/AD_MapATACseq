@@ -21,8 +21,8 @@ mkdir ${OUTDIR}
 
 
 # #process reads using trimGalore
-# ml Trim_Galore/0.6.7-GCCcore-11.2.0
-# trim_galore --paired --length 20 --fastqc --gzip -o ${OUTDIR}/TrimmedReads ${FASTQ}/*fastq\.gz
+ ml Trim_Galore/0.6.7-GCCcore-11.2.0
+ trim_galore --paired --length 20 --fastqc --gzip -o ${OUTDIR}/TrimmedReads ${FASTQ}/*fastq\.gz
 
 FILES="${OUTDIR}/TrimmedReads/*R1_001_val_1\.fq\.gz" #Don't forget the *
 #
@@ -63,7 +63,7 @@ do
   bwt_bam="${OUTDIR}/SortedBamFiles/${name}.bam"
 
   deduped1="${OUTDIR}/SortedBamFiles/${name}_deduped.bam"
-  markeddupes="${OUTDIR}/Bowtie2/SortedBamFiles/${name}_marked_dup_metrics.txt"
+  markeddupes="${OUTDIR}/SortedBamFiles/${name}_marked_dup_metrics.txt"
 
 	shifted="${OUTDIR}/ShiftedBamFile/${name}.shifted.bam"
   deduped2="${OUTDIR}/Bowtie2/FilteredBamFiles/${name}_shifted_deduped.bam"
