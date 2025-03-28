@@ -68,10 +68,10 @@ do
 	shifted="${OUTDIR}/ShiftedBamFile/${name}.shifted.bam"
   deduped2="${OUTDIR}/Bowtie2/FilteredBamFiles/${name}_shifted_deduped.bam"
 
-    # nfr="${OUTDIR}/SortedFilteredBamFiles/${name}_nfr.bam"
-    # mono="${OUTDIR}/SortedFilteredBamFiles/${name}_mono.bam"
-    # di="${OUTDIR}/SortedFilteredBamFiles/${name}_di.bam"
-    # tri="${OUTDIR}/SortedFilteredBamFiles/${name}_tri.bam"
+    nfr="${OUTDIR}/SortedFilteredBamFiles/${name}_nfr.bam"
+    mono="${OUTDIR}/SortedFilteredBamFiles/${name}_mono.bam"
+    di="${OUTDIR}/SortedFilteredBamFiles/${name}_di.bam"
+    tri="${OUTDIR}/SortedFilteredBamFiles/${name}_tri.bam"
 	#variable name for bigwig output
 	bwdir="${OUTDIR}/BigWigs"
 	#QualityBam="${OUTDIR}/SortedBamFiles/${name}_Q30.bam"
@@ -94,14 +94,14 @@ module load picard/2.27.5-Java-15
 # #
 java -jar $EBROOTPICARD/picard.jar MarkDuplicates \
      -I ${bwt_bam} \
-     -O ${bwt_deduped} \
+     -O ${deduped1} \
      -M ${markeddupes} \
      --REMOVE_DUPLICATES
-samtools index "$bwt_deduped"
+samtools index "$deduped1"
 
 #deeptools
 module load deepTools/3.5.2-foss-2022a
-alignmentSieve -p $THREADS --ATACshift --bam $bwt_deduped -o ${OUTDIR}/ShiftedBamFile/${name}.tmp.bam
+alignmentSieve -p $THREADS --ATACshift --bam $deduped1 -o ${OUTDIR}/ShiftedBamFile/${name}.tmp.bam
 
 #the bam file needs to be sorted again
 samtools sort -@ $THREADS -O bam -o ${shifted} ${OUTDIR}/ShiftedBamFile/${name}.tmp.bam
