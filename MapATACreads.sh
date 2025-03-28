@@ -65,8 +65,8 @@ do
   deduped1="${OUTDIR}/SortedBamFiles/${name}_deduped.bam"
   markeddupes="${OUTDIR}/SortedBamFiles/${name}_marked_dup_metrics.txt"
 
-	shifted="${OUTDIR}/ShiftedBamFile/${name}.shifted.bam"
-  deduped2="${OUTDIR}/Bowtie2/FilteredBamFiles/${name}_shifted_deduped.bam"
+	shifted="${OUTDIR}/ShiftedBamFiles/${name}.shifted.bam"
+  deduped2="${OUTDIR}/FilteredBamFiles/${name}_shifted_deduped.bam"
 
     nfr="${OUTDIR}/SortedFilteredBamFiles/${name}_nfr.bam"
     mono="${OUTDIR}/SortedFilteredBamFiles/${name}_mono.bam"
@@ -101,10 +101,10 @@ samtools index "$deduped1"
 
 #deeptools
 module load deepTools/3.5.2-foss-2022a
-alignmentSieve -p $THREADS --ATACshift --bam $deduped1 -o ${OUTDIR}/ShiftedBamFile/${name}.tmp.bam
+alignmentSieve -p $THREADS --ATACshift --bam $deduped1 -o ${OUTDIR}/ShiftedBamFiles/${name}.tmp.bam
 
 #the bam file needs to be sorted again
-samtools sort -@ $THREADS -O bam -o ${shifted} ${OUTDIR}/ShiftedBamFile/${name}.tmp.bam
+samtools sort -@ $THREADS -O bam -o ${shifted} ${OUTDIR}/ShiftedBamFiles/${name}.tmp.bam
 samtools index -@ $THREADS ${shifted}
 
 #rm ${name}.tmp.bam
